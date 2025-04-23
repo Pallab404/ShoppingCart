@@ -1,12 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState= {
+    cart: JSON.parse(localStorage.getItem("cart")) || []
+}
 
 export const CartSlides = createSlice({
     name:'cart',
-    initialState:[],
+    initialState,
     reducers:{
-        addToCart:()=>{},
-        remFromCart:()=>{}
+        addToCart:(state,actions)=>{
+            state.cart.push(actions.payload);
+            localStorage.setItem("cart", JSON.stringify(state.cart))
+        },
+        remFromCart:(state,actions)=>{
+            state.cart = state.cart.filter((items)=> items.id !== actions.payload)
+            localStorage.setItem("cart", JSON.stringify(state.cart));
+        }
     }
 })
 
